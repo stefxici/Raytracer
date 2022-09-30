@@ -135,13 +135,21 @@ class RayTracer
        this.scene = scene;
     }
     
-    PVector origin = new PVector(0,0,0); //origin of the ray;
-    PVector direction = new PVector(-260/2, 260/2, 0).normalize();
-    Ray ray = new Ray(origin, direction);
+   // PVector origin = new PVector(0,0,0); //origin of the ray;
+    //PVector direction = new PVector(-260/2, 260/2, 0).normalize();
+   // Ray ray = new Ray(origin, direction);
     
     color getColor(int x, int y) //this will return the color placed at pixel (x,y)
     {
+      float w = 640;
+      float h = 640;
+      float u = x*1.0/w - 0.5;
+      float v = (y*1.0/h - 0.5);
       PVector origin = scene.camera;
+      PVector origin2 = new PVector(0,0,0); //origin of the ray;
+      //PVector direction = new PVector(-260/2, 260/2, 0).normalize();
+      PVector direction = new PVector(u*w, w/2, v*h).normalize();
+      Ray ray = new Ray(origin2, direction);
       
       ArrayList<RayHit> hits = scene.root.intersect(ray);
       if (hits.size() > 0)
