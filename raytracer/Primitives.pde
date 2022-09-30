@@ -33,11 +33,11 @@ class Sphere implements SceneObject
         
         entry.location = PVector.add(r.origin, PVector.mult(r.direction, entry.t));
         entry.entry = true;
-        entry.normal = entry.location.normalize();
+        entry.normal = PVector.sub(entry.location, center).normalize();
         
         exit.location = PVector.add(r.origin, PVector.mult(r.direction, exit.t));
         exit.entry = false;
-        exit.normal = exit.location.normalize();
+        exit.normal = PVector.sub(exit.location, center).normalize();
         
         if(entry.t > 0 && exit.t > 0)
         {

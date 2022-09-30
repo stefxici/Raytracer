@@ -5,7 +5,7 @@ class RayHit
      PVector normal;
      boolean entry;
      Material material;
-     float u, v;
+     float u, v = 0;
 }
 
 interface SceneObject
