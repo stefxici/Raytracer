@@ -11,13 +11,54 @@ class Sphere implements SceneObject
        this.material = material;
        
        // remove this line when you implement spheres
-       throw new NotImplementedException("Spheres not implemented yet");
+       //throw new NotImplementedException("Spheres not implemented yet");
     }
     
     ArrayList<RayHit> intersect(Ray r)
     {
         ArrayList<RayHit> result = new ArrayList<RayHit>();
         // TODO: Step 2: implement ray-sphere intersections
+        //the result of this is the A vector for the dot product
+        //i think dot product comes after this math
+        PVector cSubo = PVector.sub(center, r.origin);
+        // incomplete attempt of dot product over multiplication
+        //PVector cSuboTimesd = new PVector(cSubo.x * r.direction.x, cSubo.y* r.direction.y, cSubo.z * r.direction.z).normalize();
+        //PVector tp = PVector.mult(PVector.sub(center, r.origin),r.direction);
+        
+        //Create entry and exit RayHit objects
+        RayHit entry = new RayHit();
+        RayHit exit = new RayHit();
+        //trying with dot product
+        float tp = cSubo.dot(r.direction);
+        float x = PVector.sub(PVector.add(r.origin, PVector.mult(r.direction, tp)), center).mag(); // x = |(o + tp*d - c)|
+        
+        entry.t = tp + sqrt( pow(radius, 2) + pow(x, 2));
+        exit.t = tp - sqrt( pow(radius, 2) + pow(x, 2));
+        
+        entry.location = PVector.add(r.origin, PVector.mult(r.direction, entry.t));
+        entry.entry = true;
+        
+        exit.location = PVector.add(r.origin, PVector.mult(r.direction, exit.t));
+        exit.entry = false;
+        
+        if(entry.t > 0 && exit.t > 0)
+        {
+          if(entry.t > exit.t)
+          {
+            result.add(exit);
+            result.add(entry);
+          }
+          else
+          {
+            result.add(entry);
+            result.add(exit);
+          }
+        }
+        
+        
+        //other vector for dot product might be the length subbed by tp??
+        //return dot product i think
+        //sub 45 degrees for theta
         return result;
     }
 }
@@ -55,9 +96,9 @@ class Triangle implements SceneObject
     PVector v2;
     PVector v3;
     PVector normal;
-    PVector tex1;
-    PVector tex2;
-    PVector tex3;
+    PVector tex1; //ignore for now
+    PVector tex2; ///ignore for now
+    PVector tex3; //ignore for now
     Material material;
     
     Triangle(PVector v1, PVector v2, PVector v3, PVector tex1, PVector tex2, PVector tex3, Material material)

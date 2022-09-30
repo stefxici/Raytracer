@@ -120,6 +120,7 @@ class Ray
 }
 
 // TODO: Start in this class!
+// MILESTONE 1: Follow that one page and implement primitives.
 class RayTracer
 {
     Scene scene;  
@@ -134,11 +135,22 @@ class RayTracer
        this.scene = scene;
     }
     
-    color getColor(int x, int y)
+    PVector origin = new PVector(0,0,0); //origin of the ray;
+    PVector direction = new PVector(-260/2, 260/2, 0).normalize();
+    Ray ray = new Ray(origin, direction);
+    
+    color getColor(int x, int y) //this will return the color placed at pixel (x,y)
     {
       PVector origin = scene.camera;
+      
+      ArrayList<RayHit> hits = scene.root.intersect(ray);
+      if (hits.size() > 0)
+      {
+        return scene.lighting.getColor(hits.get(0), scene, ray.origin);
+      }
+      return scene.background;
       // remove this line when you implement basic raytracing
-      throw new NotImplementedException("Basic raytracing not implemented yet");
+      //throw new NotImplementedException("Basic raytracing not implemented yet");
       
       /*if (scene.reflections > 0)
       {
