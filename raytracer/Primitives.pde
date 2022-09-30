@@ -17,18 +17,14 @@ class Sphere implements SceneObject
     ArrayList<RayHit> intersect(Ray r)
     {
         ArrayList<RayHit> result = new ArrayList<RayHit>();
-        // TODO: Step 2: implement ray-sphere intersections
-        //the result of this is the A vector for the dot product
-        //i think dot product comes after this math
-        PVector cSubo = PVector.sub(center, r.origin);
-        // incomplete attempt of dot product over multiplication
-        //PVector cSuboTimesd = new PVector(cSubo.x * r.direction.x, cSubo.y* r.direction.y, cSubo.z * r.direction.z).normalize();
-        //PVector tp = PVector.mult(PVector.sub(center, r.origin),r.direction);
+        
         
         //Create entry and exit RayHit objects
         RayHit entry = new RayHit();
         RayHit exit = new RayHit();
+        
         //trying with dot product
+        PVector cSubo = PVector.sub(center, r.origin);
         float tp = cSubo.dot(r.direction);
         float x = PVector.sub(PVector.add(r.origin, PVector.mult(r.direction, tp)), center).mag(); // x = |(o + tp*d - c)|
         
@@ -37,9 +33,11 @@ class Sphere implements SceneObject
         
         entry.location = PVector.add(r.origin, PVector.mult(r.direction, entry.t));
         entry.entry = true;
+        entry.normal = entry.location.normalize();
         
         exit.location = PVector.add(r.origin, PVector.mult(r.direction, exit.t));
         exit.entry = false;
+        exit.normal = exit.location.normalize();
         
         if(entry.t > 0 && exit.t > 0)
         {
