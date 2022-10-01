@@ -5,9 +5,9 @@ class RayHit
      PVector normal;
      boolean entry;
      Material material;
-     float u, v = 0;
+     float u = 0,
+           v = 0;
 }
-
 interface SceneObject
 {
    ArrayList<RayHit> intersect(Ray r);
