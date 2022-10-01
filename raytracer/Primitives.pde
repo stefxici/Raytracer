@@ -13,21 +13,39 @@ class Sphere implements SceneObject
        // remove this line when you implement spheres
        //throw new NotImplementedException("Spheres not implemented yet");
     }
-    
+ 
     ArrayList<RayHit> intersect(Ray r)
     {
-        ArrayList<RayHit> result = new ArrayList<RayHit>();
+         
+        //Sphere sphere = new Sphere();
+        //sphere.material = material;
+        //RayHit material = this.material;
         
+         rayhit(Pvector center, float radius, Material material) 
+        {
+          this.center = center;
+          this.radius = radius;
+          this.material = material;
+        }
+        
+        rayhit.material = this.material;
+        
+        ArrayList<RayHit> result = new ArrayList<RayHit>();
+        // TODO: Step 2: implement ray-sphere intersections
         
         //Create entry and exit RayHit objects
         RayHit entry = new RayHit();
         RayHit exit = new RayHit();
         
+        println(material);
         //trying with dot product
         PVector cSubo = PVector.sub(center, r.origin);
+        println(cSubo);
         float tp = cSubo.dot(r.direction);
+        println(tp);
         float x = PVector.sub(PVector.add(r.origin, PVector.mult(r.direction, tp)), center).mag(); // x = |(o + tp*d - c)|
-        
+        println(x);
+  
         entry.t = tp + sqrt( pow(radius, 2) + pow(x, 2));
         exit.t = tp - sqrt( pow(radius, 2) + pow(x, 2));
         
@@ -53,10 +71,6 @@ class Sphere implements SceneObject
           }
         }
         
-        
-        //other vector for dot product might be the length subbed by tp??
-        //return dot product i think
-        //sub 45 degrees for theta
         return result;
     }
 }
@@ -94,9 +108,9 @@ class Triangle implements SceneObject
     PVector v2;
     PVector v3;
     PVector normal;
-    PVector tex1; //ignore for now
-    PVector tex2; ///ignore for now
-    PVector tex3; //ignore for now
+    PVector tex1;
+    PVector tex2;
+    PVector tex3;
     Material material;
     
     Triangle(PVector v1, PVector v2, PVector v3, PVector tex1, PVector tex2, PVector tex3, Material material)
