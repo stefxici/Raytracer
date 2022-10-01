@@ -9,29 +9,12 @@ class Sphere implements SceneObject
        this.center = center;
        this.radius = radius;
        this.material = material;
-       
-       // remove this line when you implement spheres
-       //throw new NotImplementedException("Spheres not implemented yet");
     }
  
     ArrayList<RayHit> intersect(Ray r)
     {
-         
-        //Sphere sphere = new Sphere();
-        //sphere.material = material;
-        //RayHit material = this.material;
-        
-         rayhit(Pvector center, float radius, Material material) 
-        {
-          this.center = center;
-          this.radius = radius;
-          this.material = material;
-        }
-        
-        rayhit.material = this.material;
         
         ArrayList<RayHit> result = new ArrayList<RayHit>();
-        // TODO: Step 2: implement ray-sphere intersections
         
         //Create entry and exit RayHit objects
         RayHit entry = new RayHit();
@@ -46,16 +29,22 @@ class Sphere implements SceneObject
         float x = PVector.sub(PVector.add(r.origin, PVector.mult(r.direction, tp)), center).mag(); // x = |(o + tp*d - c)|
         println(x);
   
-        entry.t = tp + sqrt( pow(radius, 2) + pow(x, 2));
-        exit.t = tp - sqrt( pow(radius, 2) + pow(x, 2));
+        entry.setT(tp + sqrt( pow(radius, 2) + pow(x, 2)));
+        exit.setT(tp - sqrt( pow(radius, 2) + pow(x, 2)));
         
-        entry.location = PVector.add(r.origin, PVector.mult(r.direction, entry.t));
-        entry.entry = true;
-        entry.normal = PVector.sub(entry.location, center).normalize();
+        entry.setL(PVector.add(r.origin, PVector.mult(r.direction, entry.t)));
+        entry.setE(true);
+        entry.setN(PVector.sub(entry.location, center).normalize());
+        entry.setM(material);
+        entry.setU(0.0);
+        entry.setV(0.0);
         
-        exit.location = PVector.add(r.origin, PVector.mult(r.direction, exit.t));
-        exit.entry = false;
-        exit.normal = PVector.sub(exit.location, center).normalize();
+        exit.setL(PVector.add(r.origin, PVector.mult(r.direction, exit.t)));
+        exit.setE(false);
+        exit.setN(PVector.sub(exit.location, center).normalize());
+        exit.setM(material);
+        exit.setU(0.0);
+        exit.setV(0.0);
         
         if(entry.t > 0 && exit.t > 0)
         {
