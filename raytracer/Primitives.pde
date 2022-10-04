@@ -191,6 +191,18 @@ class Triangle implements SceneObject
        return UandV;
     }
     
+    boolean PointInTriangle(PVector a, PVector b, PVector c, PVector p)
+    {
+      float u = SameSide(a, b, c, p)[0];
+      float v = SameSide(a, b, c, p)[1];
+      
+      if( u >= 0 && (v >= 0) && u+v <= 1)
+      {
+       return true;
+      }
+      return false;
+    }
+    
     ArrayList<RayHit> intersect(Ray r)
     {
         ArrayList<RayHit> result = new ArrayList<RayHit>();
@@ -243,19 +255,7 @@ class Triangle implements SceneObject
         return result;
           
       }
- 
-    
-    boolean PointInTriangle(PVector a, PVector b, PVector c, PVector p)
-    {
-      float u = SameSide(a, b, c, p)[0];
-      float v = SameSide(a, b, c, p)[1];
-      
-      if( u >= 0 && (v >= 0) && u+v <= 1)
-      {
-       return true;
-      }
-      return false;
-    }
+
 
 }
 
