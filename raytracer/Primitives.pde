@@ -104,13 +104,13 @@ class Plane implements SceneObject
         entry.setT(t);
        
         entry.setL(yoft);
-        if (multdir < 0){
+        if (multdir != 0){
           entry.setE(true);
         }
         else{
           entry.setE(false);
         }
-        //entry.setT(t);
+        entry.setT(t);
         entry.setM(material);
         entry.setN(normal);
         entry.setU(0.0);
@@ -209,16 +209,14 @@ class Triangle implements SceneObject
         RayHit entry = new RayHit();
         RayHit exit = new RayHit();
         
-        PVector d = r.direction;
-        PVector origin = r.origin;
         //finding t
-        float tnum = PVector.dot(PVector.sub(v1, origin), normal);
-        float tdenom = PVector.dot(d, normal);
+        float tnum = PVector.dot(PVector.sub(v1, r.origin), normal);
+        float tdenom = PVector.dot(r.direction, normal);
         float t = tnum / tdenom;
         
         if(t > 0 &&  tdenom != 0){
           //where ray y hits a plane 
-          PVector triyoft = PVector.add(origin, PVector.mult(d, t));
+          PVector triyoft = PVector.add(r.origin, PVector.mult(r.direction, t));
           if(tdenom <= 0)
           {
             entry.setT(t);
